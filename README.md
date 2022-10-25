@@ -15,4 +15,4 @@
   进程回调保护  
   隐藏回调  
 +  ThreadUtil.c  
-  R3线程ShellCode注入  
+  R3线程劫持 
