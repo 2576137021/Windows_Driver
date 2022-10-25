@@ -1,0 +1,112 @@
+#pragma once
+#include"ntifs.h"
+NTSTATUS
+MmCopyVirtualMemory(
+	IN  PEPROCESS FromProcess,
+	IN  CONST VOID* FromAddress,
+	IN  PEPROCESS ToProcessMmCopyVirtualMemory,
+	OUT PVOID ToAddress,
+	IN  SIZE_T BufferSize,
+	IN  KPROCESSOR_MODE PreviousMode,
+	OUT PSIZE_T NumberOfBytesCopied
+);
+PVOID
+PsGetProcessWow64Process(
+	__in PEPROCESS Process
+);
+typedef ULONG WIN32_PROTECTION_MASK;
+typedef NTSTATUS(*NtProtectVirtualMemory_my)(HANDLE ProcessHandle, PVOID* BaseAddress, PSIZE_T RegionSize,
+    WIN32_PROTECTION_MASK NewProtectWin32, PULONG OldProtect);
+
+typedef enum _SYSTEM_INFORMATION_CLASS {
+    SystemBasicInformation,
+    SystemProcessorInformation,             // obsolete...delete
+    SystemPerformanceInformation,
+    SystemTimeOfDayInformation,
+    SystemPathInformation,
+    SystemProcessInformation,
+    SystemCallCountInformation,
+    SystemDeviceInformation,
+    SystemProcessorPerformanceInformation,
+    SystemFlagsInformation,
+    SystemCallTimeInformation,
+    SystemModuleInformation,
+    SystemLocksInformation,
+    SystemStackTraceInformation,
+    SystemPagedPoolInformation,
+    SystemNonPagedPoolInformation,
+    SystemHandleInformation,
+    SystemObjectInformation,
+    SystemPageFileInformation,
+    SystemVdmInstemulInformation,
+    SystemVdmBopInformation,
+    SystemFileCacheInformation,
+    SystemPoolTagInformation,
+    SystemInterruptInformation,
+    SystemDpcBehaviorInformation,
+    SystemFullMemoryInformation,
+    SystemLoadGdiDriverInformation,
+    SystemUnloadGdiDriverInformation,
+    SystemTimeAdjustmentInformation,
+    SystemSummaryMemoryInformation,
+    SystemMirrorMemoryInformation,
+    SystemPerformanceTraceInformation,
+    SystemObsolete0,
+    SystemExceptionInformation,
+    SystemCrashDumpStateInformation,
+    SystemKernelDebuggerInformation,
+    SystemContextSwitchInformation,
+    SystemRegistryQuotaInformation,
+    SystemExtendServiceTableInformation,
+    SystemPrioritySeperation,
+    SystemVerifierAddDriverInformation,
+    SystemVerifierRemoveDriverInformation,
+    SystemProcessorIdleInformation,
+    SystemLegacyDriverInformation,
+    SystemCurrentTimeZoneInformation,
+    SystemLookasideInformation,
+    SystemTimeSlipNotification,
+    SystemSessionCreate,
+    SystemSessionDetach,
+    SystemSessionInformation,
+    SystemRangeStartInformation,
+    SystemVerifierInformation,
+    SystemVerifierThunkExtend,
+    SystemSessionProcessInformation,
+    SystemLoadGdiDriverInSystemSpace,
+    SystemNumaProcessorMap,
+    SystemPrefetcherInformation,
+    SystemExtendedProcessInformation,
+    SystemRecommendedSharedDataAlignment,
+    SystemComPlusPackage,
+    SystemNumaAvailableMemory,
+    SystemProcessorPowerInformation,
+    SystemEmulationBasicInformation,
+    SystemEmulationProcessorInformation,
+    SystemExtendedHandleInformation,
+    SystemLostDelayedWriteInformation,
+    SystemBigPoolInformation,
+    SystemSessionPoolTagInformation,
+    SystemSessionMappedViewInformation,
+    SystemHotpatchInformation,
+    SystemObjectSecurityMode,
+    SystemWatchdogTimerHandler,
+    SystemWatchdogTimerInformation,
+    SystemLogicalProcessorInformation,
+    SystemWow64SharedInformation,
+    SystemRegisterFirmwareTableInformationHandler,
+    SystemFirmwareTableInformation,
+    SystemModuleInformationEx,
+    SystemVerifierTriageInformation,
+    SystemSuperfetchInformation,
+    SystemMemoryListInformation,
+    SystemFileCacheInformationEx,
+    MaxSystemInfoClass  // MaxSystemInfoClass should always be the last enum
+} SYSTEM_INFORMATION_CLASS;
+NTSTATUS
+ZwQuerySystemInformation(
+	SYSTEM_INFORMATION_CLASS SystemInformationClass,
+	PVOID64 SystemInformation,
+	ULONG64 SystemInformationLength,
+	PULONG64 ReturnLength
+);
